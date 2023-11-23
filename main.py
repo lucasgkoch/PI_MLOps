@@ -13,7 +13,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "PI_MLOps Lucas Koch"}
 
 
 @app.get("/PlayTimeGenre/{genre}")
