@@ -9,6 +9,8 @@ from collections import Counter
 
 #funcion 1
 def PlayTimeGenre(genre: str):
+    
+    
     #Se verifica que el valor ingresado sea str
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
@@ -97,12 +99,10 @@ def UserForGenre(genre: str):
     #Se crea el diccionario de retorno
     dict = {
         "Usuario con más horas jugadas para Género {}".format(genre): user_max,
-        "Horas jugadas": [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(hours_per_year['release_year'], hours_per_year['playtime_forever'])]
+        "Horas jugadas": [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(hours_per_year['release_year'], (hours_per_year['playtime_forever']/60))]
     }
 
     return dict
-
-
 
 
     
