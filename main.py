@@ -12,10 +12,41 @@ from functions import recomendacion_juego
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "PI_MLOps Lucas Koch"}
+#@app.get("/")
+#async def root():
+#    return {"message": "PI_MLOps Lucas Koch"}
 
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Presentación de la API</title>
+        </head>
+        <body>
+
+            <h1>Bienvenido a la API de PI_MLOps</h1>
+
+            <p>¡Hola! Mi nombre es Lucas Koch, y este es el proyecto PI_MLOps.</p>
+
+            <h2>Endpoints Disponibles:</h2>
+
+            <ul>
+                <li><strong>/PlayTimeGenre/{genre}</strong>: Devuelve información sobre el tiempo de juego para un género específico.</li>
+                <li><strong>/UserForGenre/{genre}</strong>: Proporciona detalles sobre los usuarios para un género dado.</li>
+                <li><strong>/UsersRecommend/{year}</strong>: Muestra recomendaciones de usuarios para un año específico.</li>
+                <li><strong>/UsersWorstDeveloper/{year}</strong>: Indica los peores desarrolladores según los usuarios para un año determinado.</li>
+                <li><strong>/sentiment_analysis/{developer}</strong>: Realiza análisis de sentimientos para un desarrollador específico.</li>
+                <li><strong>/recomendacion_juego/{id}</strong>: Ofrece recomendaciones de juego para un ID específico.</li>
+            </ul>
+
+        </body>
+        </html>
+    """
+    return HTMLResponse(content=html_content)
 
 @app.get("/PlayTimeGenre/{genre}")
 async def user(genre: str):
@@ -69,3 +100,4 @@ async def user(id: int):
         return result
     except Exception as e:
         return {"error": str(e)}
+    
