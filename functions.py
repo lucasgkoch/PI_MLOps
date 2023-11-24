@@ -104,51 +104,7 @@ def UserForGenre(genre: str):
 
 
 
-"""
-#funcion 2
-def UserForGenre(genre: str):
-    #Se verifica que el valor ingresado sea str
-    if not isinstance(genre, str):
-        return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
-    
-    #Se crean los dataframes solo con las columnas necesarias para trabajar
-    df_games=df_games_complete[['genres','release_year','id']]
-    df_items=df_items_complete[['user_id','item_id','playtime_forever']]
-    
-    #Se utiliza explode para desglosar las listas en la columna 'genres'
-    #df_exploded = df_games.explode('genres')
 
-    #Se filtra el DataFrame df_exploded por el género especificado
-    #df_filtered_games = df_exploded[df_exploded['genres'].str.contains(genre, case=False, na=False)]
-
-    # Se filtra el DataFrame df_games por el género especificado en la lista de géneros
-    df_games.dropna(subset='genres',inplace=True)
-    df_filtered_games = df_games[df_games['genres'].apply(lambda genres: any(genre.lower() in g.lower() for g in genres))]
-
-    #Se hace un join entre df_filtered_games y df_items usando 'id' y 'item_id'
-    df_filtered_games['id'] = df_filtered_games['id'].astype(int)
-    df_items['item_id'] = df_items['item_id'].astype(int)
-    df_joined = pd.merge(df_filtered_games, df_items, left_on='id', right_on='item_id', how='inner')
-
-    #Se busca el usuario con más horas jugadas para el género dado
-    user_max = df_joined.groupby('user_id')['playtime_forever'].sum().idxmax()
-
-    #Se filtran las filas correspondientes al usuario con más horas
-    df_user_max = df_joined[df_joined['user_id'] == user_max]
-    #print(df_user_max)
-
-    #Se agrupa por año y se suman las horas jugadas
-    hours_per_year = df_user_max.groupby('release_year')['playtime_forever'].sum().reset_index()
-    #print(hours_per_year)
-
-    #Se crea el diccionario de retorno
-    dict = {
-        "Usuario con más horas jugadas para Género {}".format(genre): user_max,
-        "Horas jugadas": [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(hours_per_year['release_year'], hours_per_year['playtime_forever'])]
-    }
-
-    return dict
-"""
     
 
 #funcion 3
