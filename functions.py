@@ -49,15 +49,15 @@ def UserForGenre(genre: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se crean los dataframes solo con las columnas necesarias para trabajar
-    df_games=df_games_functions
+    #df_games=df_games_functions
     df_items=df_items_complete[['user_id','item_id','playtime_forever']]
     
     #Se utiliza explode para desglosar las listas en la columna 'genres'
     #df_exploded = df_games.explode('genres')
 
     #Se filtra el DataFrame df_exploded por el género especificado
-    df_filtered_games = df_games[df_games['genres'].str.contains(genre, case=False, na=False)]
-    del df_games
+    df_filtered_games = df_games_functions[df_games_functions['genres'].str.contains(genre, case=False, na=False)]
+    #del df_games
 
     #Se elimina la columna generes para optimizar, ya que no sera necesaria
     df_filtered_games.drop(columns='genres',inplace=True)
