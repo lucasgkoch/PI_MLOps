@@ -1,11 +1,6 @@
 import pandas as pd
 from collections import Counter
 
-#Se cargan los dataframes
-#df_games_complete=pd.read_parquet('games.parquet')
-#df_items_complete=pd.read_parquet('items.parquet')
-#df_reviews_complete=pd.read_parquet('reviews.parquet')
-#df_games_functions=pd.read_parquet('games_functions.parquet')
 
 #funcion 1
 def PlayTimeGenre(genre: str):
@@ -219,4 +214,28 @@ def sentiment_analysis(developer: str):
                                 'Positive': sentiment_counts.get(2, 0)}}
     return result
 
+#funcion 6
+def recomendacion_juego(id: int):
+
+    #Se verifica que el dato ingresado sea adecuado
+    try:
+        id = int(id)
+
+        #Se carga el parquet que contiene la columna resultante de aplicar el modelo a cada registro    
+        df_games=pd.read_parquet('games_recommendations.parquet')
+
+        if id not in df_games['id'].values:
+            return "El id ingresado no existe en el dataset"
+
+        # Filtrar el DataFrame para obtener las filas correspondientes al ID proporcionado
+        resultados = df_games.loc[df_games['id'] == id, 'recommended_5']
     
+        if not resultados.empty:
+            # Si hay resultados, devolver la lista de recomendaciones (tomando solo los primeros 5)
+            return resultados.iloc[0].tolist()
+        else:
+        
+            return "No hay recomendaciones disponibles para el id ingresado"
+    
+    except ValueError:
+        return {"Error": "Por favor, ingrese un año válido como entero"}

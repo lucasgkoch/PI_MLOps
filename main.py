@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from typing import Union
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse
 from typing import List, Dict, Tuple, Sequence, Any, Union, Optional, Callable
 from functions import PlayTimeGenre
 from functions import UserForGenre
 from functions import UsersRecommend
 from functions import UsersWorstDeveloper
 from functions import sentiment_analysis
+from functions import recomendacion_juego
 
 app = FastAPI()
 
@@ -56,6 +57,15 @@ async def user(year: int):
 async def user(developer: str):
     try:
         result = sentiment_analysis(developer)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+    
+
+@app.get("/recomendacion_juego/{id}")
+async def user(id: int):
+    try:
+        result = recomendacion_juego(id)
         return result
     except Exception as e:
         return {"error": str(e)}
