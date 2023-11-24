@@ -3,9 +3,9 @@ from collections import Counter
 
 #Se cargan los dataframes
 #df_games_complete=pd.read_parquet('games.parquet')
-df_items_complete=pd.read_parquet('items.parquet')
+#df_items_complete=pd.read_parquet('items.parquet')
 #df_reviews_complete=pd.read_parquet('reviews.parquet')
-df_games_functions=pd.read_parquet('games_functions.parquet')
+#df_games_functions=pd.read_parquet('games_functions.parquet')
 
 #funcion 1
 def PlayTimeGenre(genre: str):
@@ -13,15 +13,23 @@ def PlayTimeGenre(genre: str):
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
+    #Se cargan los datasets necesarios
+    df_items_complete=pd.read_parquet('items.parquet')
+    df_games_functions=pd.read_parquet('games_functions.parquet')
+
+
     #Se crean los dataframes solo con las columnas necesarias para trabajar
     #df_games=df_games_functions
     df_items=df_items_complete[['item_id','playtime_forever']]
+    del df_items_complete
     
     #Se utiliza explode para desglosar las listas en la columna 'genres'
     #df_exploded = df_games.explode('genres')
 
     #Se filtra el DataFrame df_exploded por el género especificado
     df_filtered_games = df_games_functions[df_games_functions['genres'].str.contains(genre, case=False, na=False)]
+    del df_games_functions
+
     #Se hace un join entre df_filtered_games y df_items usando 'id' y 'item_id'
     df_filtered_games['id'] = df_filtered_games['id'].astype(int)
     df_items['item_id'] = df_items['item_id'].astype(int)
@@ -48,16 +56,21 @@ def UserForGenre(genre: str):
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
+    #Se cargan los datasets necesarios
+    df_items_complete=pd.read_parquet('items.parquet')
+    df_games_functions=pd.read_parquet('games_functions.parquet')
+    
     #Se crean los dataframes solo con las columnas necesarias para trabajar
     #df_games=df_games_functions
     df_items=df_items_complete[['user_id','item_id','playtime_forever']]
+    del df_items_complete
     
     #Se utiliza explode para desglosar las listas en la columna 'genres'
     #df_exploded = df_games.explode('genres')
 
     #Se filtra el DataFrame df_exploded por el género especificado
     df_filtered_games = df_games_functions[df_games_functions['genres'].str.contains(genre, case=False, na=False)]
-    #del df_games_functions
+    del df_games_functions
 
     #Se elimina la columna generes para optimizar, ya que no sera necesaria
     df_filtered_games.drop(columns='genres',inplace=True)
@@ -144,9 +157,15 @@ def UsersRecommend(year: int):
     try:
         year = int(year)
 
+        #Se cargan los datasets
+        df_games_complete=pd.read_parquet('games.parquet')
+        df_reviews_complete=pd.read_parquet('reviews.parquet')
+
         #Se crean los dataframes solo con las columnas necesarias para trabajar
         df_games=df_games_complete[['app_name','id']]
+        del df_games_complete
         df_reviews=df_reviews_complete[['posted_year','item_id','recommend','sentiment_analysis']]
+        del df_reviews_complete
 
         #Se filtran las revisiones para el año dado, las recomendaciones y si el sentimiento es positivo o neutral
         filtered_reviews = df_reviews[(df_reviews['posted_year'] == year) & (df_reviews['recommend']) & (df_reviews['sentiment_analysis'].isin([1, 2]))]
@@ -177,9 +196,15 @@ def UsersWorstDeveloper(year: int):
     try:
         year = int(year)
 
+        #Se cargan los datasets
+        df_games_complete=pd.read_parquet('games.parquet')
+        df_reviews_complete=pd.read_parquet('reviews.parquet')
+
         #Se crean los dataframes solo con las columnas necesarias para trabajar
         df_games=df_games_complete[['id','developer']]
+        del df_games_complete
         df_reviews=df_reviews_complete[['posted_year','item_id','recommend','sentiment_analysis']]
+        del df_reviews_complete
 
         #Se filtran las revisiones para el año dado, las no recomendaciones y si el sentimiento es negativo
         filtered_reviews = df_reviews[(df_reviews['posted_year'] == year) & (df_reviews['recommend']==False) & (df_reviews['sentiment_analysis']==0)]
@@ -212,6 +237,10 @@ def sentiment_analysis(developer: str):
     #Se verifica que el valor ingresado sea str
     if not isinstance(developer, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
+    
+    #Se cargan los datasets
+    df_games_complete=pd.read_parquet('games.parquet')
+    df_reviews_complete=pd.read_parquet('reviews.parquet')
     
     #Se crean los dataframes solo con las columnas necesarias para trabajar
     df_games=df_games_complete[['id','developer']]
