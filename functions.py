@@ -41,7 +41,7 @@ def PlayTimeGenre(genre: str):
 
 
 
-""""
+
 #funcion 2
 def UserForGenre(genre: str):
     #Se verifica que el valor ingresado sea str
@@ -49,14 +49,14 @@ def UserForGenre(genre: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se crean los dataframes solo con las columnas necesarias para trabajar
-    df_games=df_games_complete[['genres','release_year','id']]
+    df_games=df_games_functions
     df_items=df_items_complete[['user_id','item_id','playtime_forever']]
     
     #Se utiliza explode para desglosar las listas en la columna 'genres'
-    df_exploded = df_games.explode('genres')
+    #df_exploded = df_games.explode('genres')
 
     #Se filtra el DataFrame df_exploded por el género especificado
-    df_filtered_games = df_exploded[df_exploded['genres'].str.contains(genre, case=False, na=False)]
+    df_filtered_games = df_games[df_games['genres'].str.contains(genre, case=False, na=False)]
 
     #Se hace un join entre df_filtered_games y df_items usando 'id' y 'item_id'
     df_filtered_games['id'] = df_filtered_games['id'].astype(int)
@@ -81,10 +81,10 @@ def UserForGenre(genre: str):
     }
 
     return dict
+
+
+
 """
-
-
-
 #funcion 2
 def UserForGenre(genre: str):
     #Se verifica que el valor ingresado sea str
@@ -128,6 +128,8 @@ def UserForGenre(genre: str):
     }
 
     return dict
+"""
+    
 
 #funcion 3
 def UsersRecommend(year: int):
