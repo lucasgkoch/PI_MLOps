@@ -36,9 +36,8 @@ async def user(genre: str):
 
 @app.get("/UsersRecommend/{year}")
 async def user(year: int):
-    try:
-        year_int = int(year) 
-        result = UsersRecommend(year_int)
+    try: 
+        result = UsersRecommend(year)
         return result
     except Exception as e:
         return {"error": str(e)}  
@@ -47,8 +46,7 @@ async def user(year: int):
 @app.get("/UsersWorstDeveloper/{year}")
 async def user(year: int):
     try:
-        year_int = int(year) 
-        result = UsersWorstDeveloper(year_int)
+        result = UsersWorstDeveloper(year)
         return result
     except Exception as e:
         return {"error": str(e)}  
