@@ -57,7 +57,9 @@ def UserForGenre(genre: str):
 
     #Se filtra el DataFrame df_exploded por el género especificado
     df_filtered_games = df_games[df_games['genres'].str.contains(genre, case=False, na=False)]
-
+    del df_games
+    #Se elimina la columna generes para optimizar, ya que no sera necesaria
+    df_filtered_games.drop(columns='genre',inplace=True)
     #Se hace un join entre df_filtered_games y df_items usando 'id' y 'item_id'
     df_filtered_games['id'] = df_filtered_games['id'].astype(int)
     df_items['item_id'] = df_items['item_id'].astype(int)
