@@ -24,24 +24,30 @@ async def root():
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Presentación de la API</title>
+            <title>API PI_MLOps</title>
         </head>
         <body>
 
-            <h1>Bienvenido a la API de PI_MLOps</h1>
+            <h1>Bienvenido a la API PI_MLOps</h1>
 
-            <p>¡Hola! Mi nombre es Lucas Koch, y este es el proyecto PI_MLOps.</p>
+            <p>¡Hola! Soy Lucas Koch, creador de este proyecto.</p>
+            <p>Esta API ofrece consultas útiles basadas en datos de Steam relacionados con juegos, usuarios y reseñas.</p>
 
             <h2>Endpoints Disponibles:</h2>
 
             <ul>
-                <li><strong>/PlayTimeGenre/{genre}</strong>: Devuelve información sobre el tiempo de juego para un género específico.</li>
-                <li><strong>/UserForGenre/{genre}</strong>: Proporciona detalles sobre los usuarios para un género dado.</li>
-                <li><strong>/UsersRecommend/{year}</strong>: Muestra recomendaciones de usuarios para un año específico.</li>
-                <li><strong>/UsersWorstDeveloper/{year}</strong>: Indica los peores desarrolladores según los usuarios para un año determinado.</li>
-                <li><strong>/sentiment_analysis/{developer}</strong>: Realiza análisis de sentimientos para un desarrollador específico.</li>
-                <li><strong>/recomendacion_juego/{id}</strong>: Ofrece recomendaciones de juego para un ID específico.</li>
+                <li><strong>/PlayTimeGenre/{genre}</strong>: Devuelve el año con mas tiempo de juego para un género específico.</li>
+                <li><strong>/UserForGenre/{genre}</strong>: Proporciona detalles sobre el usuario que acumula más horas jugadas para el género dado.</li>
+                <li><strong>/UsersRecommend/{year}</strong>: Devuelve el top 3 de juegos mas recomendados por usuarios para el año dado.</li>
+                <li><strong>/UsersWorstDeveloper/{year}</strong>: Devuelve el top 3 de desarrolladoras con juegos menos recomendados por usuarios para el año dado.</li>
+                <li><strong>/sentiment_analysis/{developer}</strong>: Devuelve análisis de sentimientos para un desarrollador específico.</li>
+                <li><strong>/recomendacion_juego/{id}</strong>: recomienda 5 juegos similares al id de juego ingresado.</li>
             </ul>
+
+            <h3>Contacto:</h3>
+            <p>Si tienes algún inconveniente con la API, ¡no dudes en contactarme!</p>
+            <p>Mi perfil en GitHub: <a href="https://github.com/lucasgkoch">lucasgkoch</a></p>
+            <p>Mi correo electrónico: <a href="lucasgabrielkoch1997@gmail.com">lucasgabrielkoch1997@gmail.com</a></p>
 
         </body>
         </html>
