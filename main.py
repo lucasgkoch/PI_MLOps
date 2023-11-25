@@ -77,6 +77,8 @@ async def root():
                 <li><strong><a href="/recomendacion_juego/10">/recomendacion_juego/{id}</a></strong>: recomienda 5 juegos similares al id de juego ingresado.</li>
             </ul>
 
+            <p>(Puedes hacer click sobre cualquier endpoint para probarlo)</p>
+            
             <h3>Contacto:</h3>
             <p>Si tienes algún inconveniente con la API, ¡no dudes en contactarme!</p>
             <p>Mi perfil en GitHub: <a href="https://github.com/lucasgkoch">lucasgkoch</a></p>
