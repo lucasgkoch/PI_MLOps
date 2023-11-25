@@ -25,6 +25,39 @@ async def root():
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>API PI_MLOps</title>
+            <style>
+                body {
+                    font-family: 'Roboto', sans-serif;
+                    background-color: #1e1e1e; /* Fondo oscuro */
+                    color: #d4d4d4; /* Color de texto claro */
+                    margin: 20px;
+                    line-height: 1.6;
+                }
+
+                h1, h2 {
+                    color: #d19a66; /* Color de los encabezados */
+                    text-shadow: 2px 2px 4px #333; /* Sombra para resaltar los encabezados */
+                }
+
+                 ul {
+                    list-style: none; /* Quita los puntos de la lista */
+                    padding: 0;
+                }
+
+                li {
+                    margin-bottom: 10px;
+                }
+
+                a {
+                    color: #e5c07b; /* Color del enlace */
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                a:hover {
+                    text-decoration: underline;
+                }
+            </style>
         </head>
         <body>
 
@@ -36,12 +69,12 @@ async def root():
             <h2>Endpoints Disponibles:</h2>
 
             <ul>
-                <li><strong>/PlayTimeGenre/{genre}</strong>: Devuelve el año con mas tiempo de juego para un género específico.</li>
-                <li><strong>/UserForGenre/{genre}</strong>: Proporciona detalles sobre el usuario que acumula más horas jugadas para el género dado.</li>
-                <li><strong>/UsersRecommend/{year}</strong>: Devuelve el top 3 de juegos mas recomendados por usuarios para el año dado.</li>
-                <li><strong>/UsersWorstDeveloper/{year}</strong>: Devuelve el top 3 de desarrolladoras con juegos menos recomendados por usuarios para el año dado.</li>
-                <li><strong>/sentiment_analysis/{developer}</strong>: Devuelve análisis de sentimientos para un desarrollador específico.</li>
-                <li><strong>/recomendacion_juego/{id}</strong>: recomienda 5 juegos similares al id de juego ingresado.</li>
+                <li><strong><a href="/PlayTimeGenre/Action">/PlayTimeGenre/{genre}</a></strong>: Devuelve el año con mas tiempo de juego para un género específico.                             </li>
+                <li><strong><a href="/UserForGenre/Indie">/UserForGenre/{genre}</a></strong>: Proporciona detalles sobre el usuario que acumula más horas jugadas para el género dado.</li>
+                <li><strong><a href="/UsersRecommend/2012">/UsersRecommend/{year}</a></strong>: Devuelve el top 3 de juegos mas recomendados por usuarios para el año dado.</li>
+                <li><strong><a href="/UsersWorstDeveloper/2014">/UsersWorstDeveloper/{year}</a></strong>: Devuelve el top 3 de desarrolladoras con juegos menos recomendados por usuarios para el año dado.</li>
+                <li><strong><a href="/sentiment_analysis/Valve">/sentiment_analysis/{developer}</a></strong>: Devuelve análisis de sentimientos para un desarrollador específico.</li>
+                <li><strong><a href="/recomendacion_juego/10">/recomendacion_juego/{id}</a></strong>: recomienda 5 juegos similares al id de juego ingresado.</li>
             </ul>
 
             <h3>Contacto:</h3>
