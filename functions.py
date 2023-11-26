@@ -3,118 +3,78 @@ from collections import Counter
 
 
 #funcion 1
+'''
+    Debe devolver año con mas horas jugadas para dicho género
+'''
 def PlayTimeGenre(genre: str):
-    
     
     #Se verifica que el valor ingresado sea str
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
-    #Se cargan los datasets necesarios
-    df_items_complete=pd.read_parquet('items.parquet')
-    df_games_functions=pd.read_parquet('games_functions.parquet')
+    #Se carga el dataset provisto para esta funcion
+    df_max_year_per_genre=pd.read_parquet('play_time_genre.parquet')
 
+    #Se filtra el DataFrame para el género especificado
+    df_genre = df_max_year_per_genre[df_max_year_per_genre['genres'] == genre]
 
-    #Se crean los dataframes solo con las columnas necesarias para trabajar
-    #df_games=df_games_functions
-    df_items=df_items_complete[['item_id','playtime_forever']]
-    del df_items_complete
-    
-    #Se utiliza explode para desglosar las listas en la columna 'genres'
-    #df_exploded = df_games.explode('genres')
-
-    #Se filtra el DataFrame df_exploded por el género especificado
-    df_filtered_games = df_games_functions[df_games_functions['genres'].str.contains(genre, case=False, na=False)]
-    del df_games_functions
-
-    #Se hace un join entre df_filtered_games y df_items usando 'id' y 'item_id'
-    df_filtered_games['id'] = df_filtered_games['id'].astype(int)
-    df_items['item_id'] = df_items['item_id'].astype(int)
-    df_joined = pd.merge(df_filtered_games, df_items, left_on='id', right_on='item_id', how='inner')
-
-    #verifica si df_joined esta vacio
-    if df_joined.empty:
+    # Verifica si el género está presente en el DataFrame
+    if not df_genre.empty:
+        #Se guarda el año con más horas jugadas para el género
+        año_max_horas = int(df_genre.iloc[0]['release_year'])
+    else:
         return {"No hay datos disponibles para el género {}".format(genre)}
 
-    #Se agrupa por año de lanzamiento y se suman las horas jugadas
-    grouped_data = df_joined.groupby('release_year')['playtime_forever'].sum()
-
-    #Se identifica el año con la máxima suma de horas jugadas
-    max_year = grouped_data.idxmax()
-
-    return {"Año de lanzamiento con más horas jugadas para {}: {}".format(genre, int(max_year))}
+    return {"Año de lanzamiento con más horas jugadas para {}: {}".format(genre, int(año_max_horas))}
 
 
 
 
 #funcion 2
+'''
+    Debe devolver el usuario que acumula más horas jugadas para el género dado y una lista de la acumulación de horas jugadas por año.
+'''
 def UserForGenre(genre: str):
     #Se verifica que el valor ingresado sea str
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
-    #Se cargan los datasets necesarios
-    df_items_complete=pd.read_parquet('items.parquet')
-    df_games_functions=pd.read_parquet('games_functions.parquet')
-    
-    #Se crean los dataframes solo con las columnas necesarias para trabajar
-    #df_games=df_games_functions
-    df_items=df_items_complete[['user_id','item_id','playtime_forever']]
-    del df_items_complete
-    
-    #Se utiliza explode para desglosar las listas en la columna 'genres'
-    #df_exploded = df_games.explode('genres')
+    #Se carga el dataset provisto para esta funcion
+    df_max_user_per_genre=pd.read_parquet('user_for_genre.parquet')
 
-    #Se filtra el DataFrame df_exploded por el género especificado
-    df_filtered_games = df_games_functions[df_games_functions['genres'].str.contains(genre, case=False, na=False)]
-    del df_games_functions
+    #Se filtra el DataFrame para el género especificado
+    df_genre = df_max_user_per_genre[df_max_user_per_genre['genres'] == genre]
 
-    #Se elimina la columna generes para optimizar, ya que no sera necesaria
-    df_filtered_games.drop(columns='genres',inplace=True)
+    #Se verifica si se encontro el genero solicitado
+    if not df_genre.empty:
 
-    #Se hace un join entre df_filtered_games y df_items usando 'id' y 'item_id'
-    df_filtered_games['id'] = df_filtered_games['id'].astype(int)
-    df_items['item_id'] = df_items['item_id'].astype(int)
-    df_joined = pd.merge(df_filtered_games, df_items, left_on='id', right_on='item_id', how='inner')
+        user= df_genre.iloc[1]['user_id']
+        #Se crea el diccionario de retorno
+        result_dict = {
+            "Usuario con más horas jugadas para Género {}".format(genre): user,
+            "Horas jugadas": [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(df_genre['release_year'], df_genre['playtime_forever']/60)]    
+        }
+      
+    else:
+        return {"No hay datos disponibles para el género {}".format(genre)}
 
-    del df_filtered_games
-    del df_items
-
-    #Se busca el usuario con más horas jugadas para el género dado
-    user_max = df_joined.groupby('user_id')['playtime_forever'].sum().idxmax()
-
-    #Se filtran las filas correspondientes al usuario con más horas
-    df_user_max = df_joined[df_joined['user_id'] == user_max]
-    #print(df_user_max)
-
-    #Se agrupa por año y se suman las horas jugadas
-    hours_per_year = df_user_max.groupby('release_year')['playtime_forever'].sum().reset_index()
-    #print(hours_per_year)
-
-    #Se crea el diccionario de retorno
-    dict = {
-        "Usuario con más horas jugadas para Género {}".format(genre): user_max,
-        "Horas jugadas": [{"Año": int(year), "Horas": int(hours)} for year, hours in zip(hours_per_year['release_year'], (hours_per_year['playtime_forever']/60))]
-    }
-
-    return dict
-
-
+    return result_dict
     
 
 #funcion 3
+'''
+    Devuelve el top 3 de juegos MÁS recomendados por usuarios para el año dado. (reviews.recommend = True y comentarios positivos/neutrales)
+'''
 def UsersRecommend(year: int):
     #Se verifica que el dato ingresado sea adecuado
     try:
         year = int(year)
 
         #Se cargan los datasets
-        df_games_complete=pd.read_parquet('games.parquet')
+        df_games=pd.read_parquet('games_endpoints.parquet')
         df_reviews_complete=pd.read_parquet('reviews.parquet')
 
         #Se crean los dataframes solo con las columnas necesarias para trabajar
-        df_games=df_games_complete[['app_name','id']]
-        del df_games_complete
         df_reviews=df_reviews_complete[['posted_year','item_id','recommend','sentiment_analysis']]
         del df_reviews_complete
 
@@ -140,20 +100,24 @@ def UsersRecommend(year: int):
         return list
     except ValueError:
         return {"Error": "Por favor, ingrese un año válido como entero"}
-    
+
+
+
+
 #funcion 4
+'''
+    Devuelve el top 3 de desarrolladoras con juegos MENOS recomendados por usuarios para el año dado. (reviews.recommend = False y comentarios negativos)
+'''
 def UsersWorstDeveloper(year: int):
     #Se verifica que el dato ingresado sea adecuado
     try:
         year = int(year)
 
         #Se cargan los datasets
-        df_games_complete=pd.read_parquet('games.parquet')
+        df_games=pd.read_parquet('games_endpoints.parquet')
         df_reviews_complete=pd.read_parquet('reviews.parquet')
 
         #Se crean los dataframes solo con las columnas necesarias para trabajar
-        df_games=df_games_complete[['id','developer']]
-        del df_games_complete
         df_reviews=df_reviews_complete[['posted_year','item_id','recommend','sentiment_analysis']]
         del df_reviews_complete
 
@@ -182,7 +146,13 @@ def UsersWorstDeveloper(year: int):
         return {"Error": "Por favor, ingrese un año válido como entero"}
     
 
+
+
 #funcion 5
+'''
+    Según la empresa desarrolladora, se devuelve un diccionario con el nombre de la desarrolladora como llave
+     y una lista con la cantidad total de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento como valor.
+'''
 def sentiment_analysis(developer: str):
 
     #Se verifica que el valor ingresado sea str
@@ -190,11 +160,10 @@ def sentiment_analysis(developer: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se cargan los datasets
-    df_games_complete=pd.read_parquet('games.parquet')
+    df_games=pd.read_parquet('games_endpoints.parquet')
     df_reviews_complete=pd.read_parquet('reviews.parquet')
     
     #Se crean los dataframes solo con las columnas necesarias para trabajar
-    df_games=df_games_complete[['id','developer']]
     df_reviews=df_reviews_complete[['item_id','sentiment_analysis']]
     
     #Se filtran las revisiones para la desarrolladora dada
@@ -214,7 +183,13 @@ def sentiment_analysis(developer: str):
                                 'Positive': sentiment_counts.get(2, 0)}}
     return result
 
+
+
+
 #funcion 6
+'''
+    Ingresando el id de producto, deberíamos recibir una lista con 5 juegos recomendados similares al ingresado.
+'''
 def recomendacion_juego(id: int):
 
     #Se verifica que el dato ingresado sea adecuado
