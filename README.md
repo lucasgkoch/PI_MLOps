@@ -1,6 +1,6 @@
 # Nombre del Proyecto
 
-Descripción breve del proyecto y su propósito.
+"Este proyecto se centra en el desarrollo de una API que ofrece información detallada sobre juegos de Steam, usuarios y recomendaciones personalizadas. Utilizando conjuntos de datos específicos de Steam, hemos implementado endpoints que proporcionan datos relevantes sobre juegos, reseñas de usuarios y elementos del juego. La API, creada con Python y FastAPI, ha sido optimizada para brindar respuestas rápidas y eficientes. Además, hemos incorporado un modelo de recomendación de juegos mediante machine learning. El proceso ETL garantiza la limpieza y eficiencia en el manejo de grandes conjuntos de datos. El servicio web está actualmente desplegado en Render, lo que permite un acceso fácil y rápido a esta valiosa información sobre la plataforma Steam."
 
 ## Tecnologías Utilizadas
 
