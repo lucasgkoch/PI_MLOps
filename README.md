@@ -1,4 +1,7 @@
-# Proyecto individual MLOps
+
+<p align="center">
+  <h1>Proyecto Individual MLOps</h1>
+</p>
 
 Este proyecto se centra en el desarrollo de una API que ofrece información detallada sobre juegos de Steam, usuarios y recomendaciones . Utilizando conjuntos de datos específicos de Steam, he implementado endpoints que proporcionan datos relevantes sobre juegos, reseñas de usuarios y elementos del juego. La API, creada con Python y FastAPI, ha sido optimizada para brindar respuestas rápidas y eficientes. Además, he incorporado un modelo de recomendación de juegos mediante machine learning. El proceso ETL garantiza la limpieza y eficiencia en el manejo de grandes conjuntos de datos. El servicio web está actualmente desplegado en Render, lo que permite un acceso fácil y rápido a esta valiosa información sobre la plataforma Steam.
 
