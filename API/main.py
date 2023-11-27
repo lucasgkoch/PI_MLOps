@@ -2,12 +2,12 @@ from fastapi import FastAPI
 from typing import Union
 from fastapi.responses import HTMLResponse
 from typing import List, Dict, Tuple, Sequence, Any, Union, Optional, Callable
-from functions import PlayTimeGenre
-from functions import UserForGenre
-from functions import UsersRecommend
-from functions import UsersWorstDeveloper
-from functions import sentiment_analysis
-from functions import recomendacion_juego
+from .functions import PlayTimeGenre
+from .functions import UserForGenre
+from .functions import UsersRecommend
+from .functions import UsersWorstDeveloper
+from .functions import sentiment_analysis
+from .functions import recomendacion_juego
 
 app = FastAPI()
 
