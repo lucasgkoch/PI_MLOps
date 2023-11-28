@@ -3,11 +3,30 @@ from collections import Counter
 
   
 #funcion 1
-'''
-    Debe devolver año con mas horas jugadas para dicho género
-'''
+
 def PlayTimeGenre(genre: str):
-    
+    '''
+    """
+    Devuelve el año de lanzamiento con más horas jugadas para un género específico.
+
+    Parámetros:
+    genre (str): El género para el cual se busca el año con más horas jugadas.
+
+    Retorna:
+    dict: Un diccionario que contiene el resultado de la búsqueda. Puede tener las siguientes claves:
+          - "Año de lanzamiento con más horas jugadas para {genre}": El año de lanzamiento con más horas jugadas.
+          - "No hay datos disponibles para el género {genre}": Mensaje si no hay datos disponibles para el género especificado.
+          - "Error": Mensaje de error si el parámetro 'genre' no es una cadena (str).
+
+    Ejemplo:
+    >>> PlayTimeGenre("Action")
+    {'Año de lanzamiento con más horas jugadas para Action': 2010}
+
+    Nota:
+    Esta función utiliza un dataset cargado previamente ('API/play_time_genre.parquet').
+    """
+    '''
+
     #Se verifica que el valor ingresado sea str
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
@@ -31,10 +50,32 @@ def PlayTimeGenre(genre: str):
 
 
 #funcion 2
-'''
-    Debe devolver el usuario que acumula más horas jugadas para el género dado y una lista de la acumulación de horas jugadas por año.
-'''
+
 def UserForGenre(genre: str):
+    """
+    Devuelve el usuario con más horas jugadas y las horas jugadas por año para un género específico.
+
+    Parámetros:
+    genre (str): El género para el cual se busca el usuario con más horas jugadas.
+
+    Retorna:
+    dict: Un diccionario que contiene el resultado de la búsqueda. Puede tener las siguientes claves:
+          - "Usuario con más horas jugadas para Género {genre}": El ID del usuario con más horas jugadas.
+          - "Horas jugadas": Una lista de diccionarios que contiene información sobre las horas jugadas por año.
+            Cada diccionario tiene las claves "Año" y "Horas".
+
+          Ejemplo:
+          {'Usuario con más horas jugadas para Género Action': 'usuario123',
+           'Horas jugadas': [{'Año': 2010, 'Horas': 150}, {'Año': 2011, 'Horas': 200}]}
+
+          - "No hay datos disponibles para el género {genre}": Mensaje si no hay datos disponibles para el género especificado.
+          - "Error": Mensaje de error si el parámetro 'genre' no es una cadena (str).
+
+    Nota:
+    Esta función utiliza un dataset cargado previamente ('API/user_for_genre.parquet').
+    """
+
+
     #Se verifica que el valor ingresado sea str
     if not isinstance(genre, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
@@ -62,10 +103,29 @@ def UserForGenre(genre: str):
     
 
 #funcion 3
-'''
-    Devuelve el top 3 de juegos MÁS recomendados por usuarios para el año dado. (reviews.recommend = True y comentarios positivos/neutrales)
-'''
+
 def UsersRecommend(year: int):
+    """
+    Devuelve una lista con el top 3 de juegos recomendados para un año específico.
+
+    Parámetros:
+    year (int): El año para el cual se busca el top de juegos recomendados.
+
+    Retorna:
+    list: Una lista de diccionarios que contiene el top 3 de juegos recomendados.
+          Cada diccionario tiene la clave "Puesto {i+1}" y el valor del juego.
+
+          Ejemplo:
+          [{'Puesto 1': 'Nombre del juego 1'},
+           {'Puesto 2': 'Nombre del juego 2'},
+           {'Puesto 3': 'Nombre del juego 3'}]
+
+          - Si no hay datos disponibles para el año proporcionado, se devuelve una lista vacía.
+          - Si se produce un error (por ejemplo, el año no es un entero), se devuelve un diccionario con el mensaje de error.
+
+    Nota:
+    Esta función utiliza dos datasets cargados previamente ('API/games_endpoints.parquet' y 'API/reviews.parquet').
+    """
     #Se verifica que el dato ingresado sea adecuado
     try:
         year = int(year)
@@ -105,10 +165,29 @@ def UsersRecommend(year: int):
 
 
 #funcion 4
-'''
-    Devuelve el top 3 de desarrolladoras con juegos MENOS recomendados por usuarios para el año dado. (reviews.recommend = False y comentarios negativos)
-'''
+
 def UsersWorstDeveloper(year: int):
+    """
+    Devuelve una lista con el top 3 de desarrolladores con más juegos no recomendados para un año específico.
+
+    Parámetros:
+    year (int): El año para el cual se busca el top de desarrolladores con más juegos no recomendados.
+
+    Retorna:
+    list: Una lista de diccionarios que contiene el top 3 de desarrolladores con más juegos no recomendados.
+          Cada diccionario tiene la clave "Puesto {i+1}" y el valor del nombre del desarrollador.
+
+          Ejemplo:
+          [{'Puesto 1': 'Nombre del desarrollador 1'},
+           {'Puesto 2': 'Nombre del desarrollador 2'},
+           {'Puesto 3': 'Nombre del desarrollador 3'}]
+
+          - Si no hay datos disponibles para el año proporcionado, se devuelve una lista vacía.
+          - Si se produce un error (por ejemplo, el año no es un entero), se devuelve un diccionario con el mensaje de error.
+
+    Nota:
+    Esta función utiliza dos datasets cargados previamente ('API/games_endpoints.parquet' y 'API/reviews.parquet').
+    """
     #Se verifica que el dato ingresado sea adecuado
     try:
         year = int(year)
@@ -149,12 +228,34 @@ def UsersWorstDeveloper(year: int):
 
 
 #funcion 5
-'''
-    Según la empresa desarrolladora, se devuelve un diccionario con el nombre de la desarrolladora como llave
-     y una lista con la cantidad total de registros de reseñas de usuarios que se encuentren categorizados con un análisis de sentimiento como valor.
-'''
-def sentiment_analysis(developer: str):
 
+def sentiment_analysis(developer: str):
+    """
+    Realiza un análisis de sentimiento de las revisiones para juegos de un desarrollador específico.
+
+    Parámetros:
+    developer (str): El nombre del desarrollador para el cual se realiza el análisis de sentimiento.
+
+    Retorna:
+    dict: Un diccionario que contiene el análisis de sentimiento para el desarrollador dado.
+          La estructura del diccionario es la siguiente:
+          {
+            "Nombre del desarrollador": {
+                'Negative': Cantidad de revisiones con sentimiento negativo,
+                'Neutral': Cantidad de revisiones con sentimiento neutral,
+                'Positive': Cantidad de revisiones con sentimiento positivo
+            }
+          }
+
+          Ejemplo:
+          {'Nombre del desarrollador': {'Negative': 50, 'Neutral': 30, 'Positive': 20}}
+
+          - Si no hay datos disponibles para el desarrollador proporcionado, se devuelve un diccionario vacío.
+          - Si se produce un error (por ejemplo, el desarrollador no es una cadena), se devuelve un diccionario con el mensaje de error.
+
+    Nota:
+    Esta función utiliza dos datasets cargados previamente ('API/games_endpoints.parquet' y 'API/reviews.parquet').
+    """
     #Se verifica que el valor ingresado sea str
     if not isinstance(developer, str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
@@ -187,11 +288,27 @@ def sentiment_analysis(developer: str):
 
 
 #funcion 6
-'''
-    Ingresando el id de producto, deberíamos recibir una lista con 5 juegos recomendados similares al ingresado.
-'''
-def recomendacion_juego(id: int):
 
+def recomendacion_juego(id: int):
+    """
+    Devuelve una lista de recomendaciones de juegos para un ID específico según un modelo de recomendación.
+
+    Parámetros:
+    id (int): El ID del juego para el cual se buscan recomendaciones.
+
+    Retorna:
+    list: Una lista de recomendaciones de juegos para el ID proporcionado. Puede contener hasta 5 elementos.
+
+          Ejemplo:
+          [123, 456, 789, 987, 654]
+
+          - Si el ID no existe en el dataset, se devuelve un mensaje indicando que el ID no existe.
+          - Si no hay recomendaciones disponibles para el ID proporcionado, se devuelve un mensaje indicando que no hay recomendaciones.
+          - Si se produce un error (por ejemplo, el ID no es un entero), se devuelve un diccionario con el mensaje de error.
+
+    Nota:
+    Esta función utiliza un dataset cargado previamente ('API/games_recommendations.parquet') que contiene la columna 'recommended_5'.
+    """
     #Se verifica que el dato ingresado sea adecuado
     try:
         id = int(id)
