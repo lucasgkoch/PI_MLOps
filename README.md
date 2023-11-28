@@ -21,7 +21,7 @@ El repositorio está organizado de la siguiente manera:
 
 - **root**: Contiene Jupyter Notebooks como `ETL_EDA_games.ipynb`, `ETL_EDA_items.ipynb`, y `ETL_EDA_reviews.ipynb`, donde se lleva a cabo el proceso de Extracción, Transformación y Análisis Exploratorio de Datos.
 
-- **raw_data**: Aquí se encuentran los datasets originales recibidos en formato JSON
+- **raw_data**: Aquí se encuentran los datasets originales recibidos en formato JSON.(Debido al tamaño de los archivos, no se encuentran en el repositorio, pero podes descargarlos desde este link:https://drive.google.com/drive/folders/11sPtTDKOMgIj-LLgj6eS4inBn0ryRUIj?usp=sharing y colocarlos en la carpeta raw_data)
 
 - **processed_data**: Esta carpeta almacena los datasets procesados y limpios generados durante el ETL/EDA.
 
