@@ -13,7 +13,7 @@ def PlayTimeGenre(genre: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se carga el dataset provisto para esta funcion
-    df_max_year_per_genre=pd.read_parquet('play_time_genre.parquet')
+    df_max_year_per_genre=pd.read_parquet('.play_time_genre.parquet')
 
     #Se filtra el DataFrame para el género especificado
     df_genre = df_max_year_per_genre[df_max_year_per_genre['genres'] == genre]
