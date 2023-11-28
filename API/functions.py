@@ -13,7 +13,7 @@ def PlayTimeGenre(genre: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se carga el dataset provisto para esta funcion
-    df_max_year_per_genre=pd.read_parquet('.play_time_genre.parquet')
+    df_max_year_per_genre=pd.read_parquet('API/play_time_genre.parquet')
 
     #Se filtra el DataFrame para el género especificado
     df_genre = df_max_year_per_genre[df_max_year_per_genre['genres'] == genre]
@@ -40,7 +40,7 @@ def UserForGenre(genre: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se carga el dataset provisto para esta funcion
-    df_max_user_per_genre=pd.read_parquet('user_for_genre.parquet')
+    df_max_user_per_genre=pd.read_parquet('API/user_for_genre.parquet')
 
     #Se filtra el DataFrame para el género especificado
     df_genre = df_max_user_per_genre[df_max_user_per_genre['genres'] == genre]
@@ -71,8 +71,8 @@ def UsersRecommend(year: int):
         year = int(year)
 
         #Se cargan los datasets
-        df_games=pd.read_parquet('games_endpoints.parquet')
-        df_reviews_complete=pd.read_parquet('reviews.parquet')
+        df_games=pd.read_parquet('API/games_endpoints.parquet')
+        df_reviews_complete=pd.read_parquet('API/reviews.parquet')
 
         #Se crean los dataframes solo con las columnas necesarias para trabajar
         df_reviews=df_reviews_complete[['posted_year','item_id','recommend','sentiment_analysis']]
@@ -114,8 +114,8 @@ def UsersWorstDeveloper(year: int):
         year = int(year)
 
         #Se cargan los datasets
-        df_games=pd.read_parquet('games_endpoints.parquet')
-        df_reviews_complete=pd.read_parquet('reviews.parquet')
+        df_games=pd.read_parquet('API/games_endpoints.parquet')
+        df_reviews_complete=pd.read_parquet('API/reviews.parquet')
 
         #Se crean los dataframes solo con las columnas necesarias para trabajar
         df_reviews=df_reviews_complete[['posted_year','item_id','recommend','sentiment_analysis']]
@@ -160,8 +160,8 @@ def sentiment_analysis(developer: str):
         return {"Error": "El parámetro 'genero' debe ser una cadena (str)"}
     
     #Se cargan los datasets
-    df_games=pd.read_parquet('games_endpoints.parquet')
-    df_reviews_complete=pd.read_parquet('reviews.parquet')
+    df_games=pd.read_parquet('API/games_endpoints.parquet')
+    df_reviews_complete=pd.read_parquet('API/reviews.parquet')
     
     #Se crean los dataframes solo con las columnas necesarias para trabajar
     df_reviews=df_reviews_complete[['item_id','sentiment_analysis']]
@@ -197,7 +197,7 @@ def recomendacion_juego(id: int):
         id = int(id)
 
         #Se carga el parquet que contiene la columna resultante de aplicar el modelo a cada registro    
-        df_games=pd.read_parquet('games_recommendations.parquet')
+        df_games=pd.read_parquet('API/games_recommendations.parquet')
 
         if id not in df_games['id'].values:
             return "El id ingresado no existe en el dataset"
