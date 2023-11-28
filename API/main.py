@@ -18,9 +18,7 @@ def intTryParse(value):
     except ValueError:
         return  False
 
-#@app.get("/")
-#async def root():
-#    return {"message": "PI_MLOps Lucas Koch"}
+#Se utiliza HTMLResponse para poner codigo HTML en el root y asi tener una interfaz donde el usuario pueda informarse sobre el uso de la api y pueda probar los endpoints
 
 @app.get("/", response_class=HTMLResponse)
 async def root():
@@ -94,6 +92,8 @@ async def root():
         </html>
     """
     return HTMLResponse(content=html_content)
+
+#Se crean los endpoints para las distintas funciones
 
 @app.get("/PlayTimeGenre/{genre}")
 async def user(genre: str):
