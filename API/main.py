@@ -87,6 +87,7 @@ async def root():
             <p>Si tienes algún inconveniente con la API, ¡no dudes en contactarme!</p>
             <p>Mi perfil en GitHub: <a href="https://github.com/lucasgkoch">lucasgkoch</a></p>
             <p>Mi correo electrónico: <a href="lucasgabrielkoch1997@gmail.com">lucasgabrielkoch1997@gmail.com</a></p>
+            <p>Mi perfil en linkedin: <a href="https://www.linkedin.com/in/lucas-gkoch/">Lucas Koch</a></p>
 
         </body>
         </html>
