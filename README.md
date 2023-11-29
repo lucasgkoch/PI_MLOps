@@ -1,3 +1,5 @@
+![Banner MLOps steam](assets\banner_MLOps_steam.png)
+
 
 # <h1 align=center> **Proyecto individual MLOps** </h1>
 
