@@ -121,6 +121,10 @@ La API proporciona diversos endpoints para obtener información específica sobr
 /recomendacion_juego/10
 
 
+### Video
+
+En el siguiente [Link](https://www.youtube.com/watch?v=PeGiGaEpA6w) encontraras un video donde explico el funcionamiento de la API.
+
 ## Contacto
 
 Si tienes alguna pregunta, sugerencia o simplemente quieres ponerte en contacto, no dudes en hacerlo:
