@@ -123,6 +123,10 @@ La API proporciona diversos endpoints para obtener información específica sobr
 /recomendacion_juego/10
 
 
+### Deploy
+
+La api esta actualmente on-line, desplegada en Render en el siguiente [Link](https://pi-mlops-xty3.onrender.com/)
+
 ### Video
 
 En el siguiente [Link](https://www.youtube.com/watch?v=PeGiGaEpA6w) encontraras un video donde explico el funcionamiento de la API.
